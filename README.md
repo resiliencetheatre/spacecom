@@ -3,6 +3,9 @@
 Tiny standalone NORM-based file transfer tools for Debian/amd64 hosts using the
 host-installed `libnorm-dev` package.
 
+![Intro picture](img/spacecom.excalidraw.png "Introduction")
+
+
 This project contains:
 
 - `spacecom-send` — send one file with NORM
