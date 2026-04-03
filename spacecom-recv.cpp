@@ -174,9 +174,7 @@ int main(int argc, char* argv[])
             }
 
             case NORM_RX_OBJECT_COMPLETED:
-                fprintf(stderr, "spacecom-recv: NORM_RX_OBJECT_COMPLETED event ...\n");
-                sleep(5);
-                keep_going = false;
+                fprintf(stderr, "spacecom-recv: NORM_RX_OBJECT_COMPLETED event ... ready for next transfer\n");
                 break;
 
             case NORM_RX_OBJECT_ABORTED:
@@ -192,7 +190,7 @@ int main(int argc, char* argv[])
                 break;
 
             case NORM_REMOTE_SENDER_INACTIVE:
-                fprintf(stderr, "spacecom-recv: NORM_REMOTE_SENDER_INACTIVE event ...\n");
+                fprintf(stderr, "spacecom-recv: NORM_REMOTE_SENDER_INACTIVE event ... waiting for next transfer\n");
                 break;
 
             default:
