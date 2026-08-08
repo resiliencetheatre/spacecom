@@ -1,2 +1,54 @@
-spacecom-recv
-spacecom-send
+# Project binaries
+/spacecom-send
+/spacecom-recv
+/spacecomd
+/spacecomctl
+
+# Compiler and linker output
+*.o
+*.obj
+*.a
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.d
+*.gcda
+*.gcno
+*.gcov
+
+# Build-system output
+/build/
+/cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+compile_commands.json
+Makefile.in
+autom4te.cache/
+
+# Local configuration and daemon runtime state
+/spacecom.conf
+*.db
+*.db-shm
+*.db-wal
+*.partial
+/state/
+/outbox/
+/inbox/
+
+# Test output, logs, and crash dumps
+*.log
+*.tmp
+*.core
+core
+core.*
+/Testing/
+
+# Editor and operating-system files
+*~
+*.swp
+*.swo
+.DS_Store
+.idea/
+.vscode/

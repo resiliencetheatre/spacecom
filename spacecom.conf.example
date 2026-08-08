@@ -1,0 +1,17 @@
+# Endpoint A example; exchange the two receive ports on endpoint B.
+node_id=1
+peer_node_id=2
+peer_address=10.0.0.4
+local_rx_port=6003
+peer_rx_port=6005
+state_dir=/var/lib/spacecom
+outbox=/var/spool/spacecom/outbox
+inbox=/var/spool/spacecom/inbox
+tx_rate_bps=2000000
+segment_size=1000
+block_size=64
+parity_count=16
+tx_buffer_bytes=4194304
+rx_buffer_bytes=4194304
+scan_interval_seconds=5
+retry_seconds=30

@@ -12,7 +12,7 @@ endif
 CXXFLAGS ?= -O2 -Wall -Wextra -std=c++11 -D_FILE_OFFSET_BITS=64
 CPPFLAGS += $(NORM_CFLAGS)
 
-TOOLS = spacecom-send spacecom-recv
+TOOLS = spacecom-send spacecom-recv spacecomd spacecomctl
 
 all: $(TOOLS)
 
@@ -21,6 +21,12 @@ spacecom-send: spacecom-send.cpp spacecom_common.h
 
 spacecom-recv: spacecom-recv.cpp spacecom_common.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ spacecom-recv.cpp $(NORM_LIBS)
+
+spacecomd: spacecomd.cpp norm_runtime.cpp spacecom_config.cpp spacecom_protocol.cpp spacecom_store.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -std=c++17 -o $@ $^ $(NORM_LIBS) -lsqlite3 -lcrypto
+
+spacecomctl: spacecomctl.cpp spacecom_config.cpp spacecom_store.cpp spacecom_protocol.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -std=c++17 -o $@ $^ -lsqlite3 -lcrypto
 
 install: $(TOOLS)
 	mkdir -p $(DESTDIR)$(PREFIX)/bin

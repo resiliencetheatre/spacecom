@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include <string>
 #include <sys/time.h>
 #include <unistd.h>
@@ -33,11 +34,26 @@ inline bool ParseSessionArg(int& i, int argc, char* argv[], SessionConfig& cfg, 
     }
 
     cfg.session_addr = argv[i++];
-    std::size_t slash = cfg.session_addr.find('/');
+    std::size_t slash = cfg.session_addr.rfind('/');
     if (std::string::npos != slash)
     {
-        cfg.session_port = static_cast<uint16_t>(atoi(cfg.session_addr.c_str() + slash + 1));
+        const char* text = cfg.session_addr.c_str() + slash + 1;
+        char* end = NULL;
+        errno = 0;
+        unsigned long port = strtoul(text, &end, 10);
+        if ((text == end) || (NULL == end) || ('\0' != *end) || errno ||
+            (0 == port) || (port > 65534))
+        {
+            fprintf(stderr, "%s error: invalid session port\n", tool_name);
+            return false;
+        }
+        cfg.session_port = static_cast<uint16_t>(port);
         cfg.session_addr.resize(slash);
+    }
+    if (cfg.session_addr.empty())
+    {
+        fprintf(stderr, "%s error: empty session address\n", tool_name);
+        return false;
     }
     return true;
 }
