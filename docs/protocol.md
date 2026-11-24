@@ -31,7 +31,7 @@ Data object:
 SC1\tFILE\t<transfer-id>\t<size>\t<sha256-hex>\t<mode-octal>\t<mtime>\t<name>
 ```
 
-Receipt object (the file payload is empty):
+Receipt object (the file payload is a single newline byte; its contents are ignored):
 
 ```
 SC1\tRECEIPT\t<transfer-id>\tOK
@@ -72,8 +72,9 @@ existing destination; a collision is an error.
 
 ## Crash and duplicate semantics
 
-SQLite uses WAL and full synchronous mode.  On startup, `sending` and
-`transport_acked` rows become `queued`.  Stale incoming partial files may be
+SQLite uses WAL and full synchronous mode.  On daemon startup, `sending` and
+`transport_acked` rows become `queued`. Opening the database for `spacecomctl list`
+does not perform this recovery or change active transfer states. Stale incoming partial files may be
 discarded because NORM v1 transfers a whole file per object.  A committed row
 is the durable duplicate detector.  Chunk-level cross-restart resume is
 reserved for protocol v2.

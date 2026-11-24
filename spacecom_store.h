@@ -10,6 +10,7 @@ class Store {
 public:
     Store() = default; ~Store(); Store(const Store&)=delete; Store& operator=(const Store&)=delete;
     bool Open(const std::string& path,std::string& error);
+    bool Recover(std::string& error);
     bool Add(const TransferRow& row,std::string& error);
     bool Next(uint64_t now,TransferRow& row,bool& found,std::string& error);
     bool SetState(const std::string& id,const std::string& state,uint64_t next,const std::string& detail,std::string& error);
