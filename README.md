@@ -70,7 +70,24 @@ receive port.  Endpoint A might receive on 6003 and send to 6005; endpoint B
 must receive on 6005 and send to 6003.  Use stable, distinct NORM node IDs and
 the peers' WireGuard IP addresses.
 
-Start a daemon in the foreground:
+Install the binaries, configuration, data directories, and systemd service:
+
+```sh
+make
+make install
+sudoedit /etc/spacecom.conf
+sudo systemctl enable --now spacecomd.service
+```
+
+`make install` uses `sudo` and makes `/var/lib/spacecom` and
+`/var/spool/spacecom` (including `outbox` and `inbox`) owned by the invoking
+user. The installed service runs as that user. Override with
+`make install INSTALL_USER=tech` if needed. Existing `/etc/spacecom.conf`
+is preserved on subsequent installs. Before starting each endpoint, set its
+node IDs, peer address, and receive ports in that file. Installation reloads
+systemd but does not enable or start the service.
+
+Alternatively, start a daemon in the foreground:
 
 ```sh
 spacecomd /etc/spacecom.conf
